@@ -238,6 +238,7 @@ export default {
       statuses: function(){
         const results = this._super();
         if (this.topic.has_accepted_answer) {
+          $(`[data-topic-id='${this.topic.id}']`).css('backgroundColor', '#f0fff0');
           results.push({
             openTag: 'span',
             closeTag: 'span',

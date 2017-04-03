@@ -11,6 +11,7 @@ register_asset 'stylesheets/solutions.scss'
 
 after_initialize do
 
+  load File.expand_path("../serializers/topic_list_item_serializer.rb", __FILE__) #Added for solved topics
   # we got to do a one time upgrade
   if defined?(UserAction::SOLVED)
     unless $redis.get('solved_already_upgraded')
@@ -84,6 +85,7 @@ SQL
       post.topic.save!
       post.save!
 
+=begin
       if defined?(UserAction::SOLVED)
         UserAction.log_action!(action_type: UserAction::SOLVED,
                               user_id: post.user_id,
@@ -105,6 +107,7 @@ SQL
                            }.to_json
                           )
       end
+=end
 
       DiscourseEvent.trigger(:accepted_solution, post)
 
